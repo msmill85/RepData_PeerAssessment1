@@ -1,3 +1,11 @@
+---
+output: 
+  html_document: 
+    keep_md: yes
+---
+*Steps and fitness monitors*
+========================================================================
+
 Preppring R studio 
 ```{r}
 library(knitr)
@@ -5,8 +13,6 @@ library(ggplot2)
 library(dplyr)
 
 ```
-
-## Loading and preprocessing the data
 
 First we are going to read in the data and place it in the appropriate form
 ```{r}
@@ -19,15 +25,11 @@ Then we are going to get some information about the data set
 
 ```{r}
 dim(activityData)
-head(activityData)---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+head(activityData)
+```
 
-## What is mean total number of steps taken per day?
-
+What are thr total number of steps per day?
+--------------------------------------------------------------------------------------------------
 The next step is to understand what is the mean total number of steps taken per day. 
 ```{r}
 activity_per_day<-activityData[which(!is.na(activityData$steps)),]
@@ -45,9 +47,10 @@ mean(activity_per_day$steps)
 Calculating the median
 ```{r}
 median(activity_per_day$steps)
+```
 
-## What is the average daily activity pattern?
-
+What is the average daily activity pattern?
+---------------------------------------------------------------------
 Make a time series plot (i.e.type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 ```{r}
@@ -65,9 +68,9 @@ Which 5 minutes internal,on average across all days in the dataset, contains the
 filter(agginterval, steps==max(steps))
 ```
 
-## Imputing missing values
-
-Calculate and report the total number of missing values in the dataset (i.e. the total number of rows withÂ 
+Missing Values
+--------------------------------------------------------------------------------------
+Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with 
 NA's
 
 ```{r}
@@ -85,8 +88,10 @@ Checking for missing values
 ```{r}
 sum(is.na(anew$steps))
 ```
-
-## Are there differences in activity patterns between weekdays and weekends?
+A histogram of the total number of steps taken each day
+-----------------------------------------------------------------------------
+For this part the weekdays() function may be of some help here. Use the dataset with the filled-in missing values for this part.Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
+Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
 ```{r}
 weekdays <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
@@ -98,3 +103,4 @@ library(lattice)
 
 xyplot(steps_by_interval$steps ~ steps_by_interval$interval|steps_by_interval$dow, main="Average Steps per Day ",xlab="Interval", ylab="Steps",layout=c(1,2), type="l")
 ```
+
